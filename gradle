@@ -1,0 +1,28 @@
+#!/bin/bash
+
+main() {
+  data_container_exists || create_data_container > /dev/null
+  run_dockerized_gradle_executable "$@"
+}
+
+data_container_exists() {
+  docker ps --all --filter name=gradle_data | grep -q gradle_data
+}
+
+create_data_container() {
+  docker create --name gradle_data --user gradle eightycolumns/gradle:4.0
+}
+
+run_dockerized_gradle_executable() {
+  docker run \
+    --interactive \
+    --tty \
+    --rm \
+    --volumes-from gradle_data \
+    --volume "${PWD}:/home/gradle/project" \
+    --workdir /home/gradle/project \
+    eightycolumns/gradle:4.0 \
+    "$@"
+}
+
+[ "${BASH_SOURCE[0]}" == "$0" ] && main "$@"
