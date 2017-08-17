@@ -1,0 +1,31 @@
+DOCKERIZED GRADLE
+
+  A dockerized Gradle 4.0 executable using OpenJDK 8.
+
+BUILD IMAGE
+
+  make
+
+  or
+
+  make build
+
+INSTALL EXECUTABLE
+
+  make install
+
+USAGE
+
+  First, add these lines to your .bashrc to ensure ~/bin is in your PATH:
+
+    if ! echo "${PATH}" | grep -Eq "(^|:)${HOME}/bin(:|$)"; then
+      export PATH=${HOME}/bin:${PATH}
+    fi
+
+  Then...
+
+    gradle test, etc.
+
+UNINSTALL EXECUTABLE
+
+  make uninstall
